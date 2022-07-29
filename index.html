@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head><link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Concert+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+</head>
+<style>
+    *{padding: 0;margin: 0;user-select: none;}
+    body{
+        width: 100%;
+        height: 100vh;
+        background: #49a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    section{
+        width: 400px;
+        height: 600px;
+        background:#13274F;
+        box-shadow: -5px -5px 20px rgba(3, 3, 3, 0.685), 5px 5px 20px rgba(255, 255, 255, 0.712);
+        border: 1px solid #123;
+        border-radius: 20px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+    .display{
+        width: 90%;
+        height: 70px;
+        background: #abc;
+        box-shadow: -4px -4px 4px #013,4px 4px 4px #235, inset 0 0 10px 4px  #568 ;
+        box-sizing: border-box;
+        position: absolute;
+        top: 22px;
+        left: 50%;
+        border: 1px solid #023;
+        border-radius: 10px;
+        transform: translate(-50%);
+        margin: auto;
+    }
+    .calcs, .t, .d, .welcome{
+        width: 90%;
+        text-align: center;
+        background: transparent;
+        font-family: VT323;
+        outline: none;
+        border: none;
+        display: none;
+        font-size: 36px;
+        color: #124;
+        font-weight: 900;
+        /* box-shadow: 0 0 50px #456, inset 0 0 20px #679; */
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        /* border: 1px solid red; */
+        transform: translate(-50%,-50%);
+    }
+    .welcome{
+        letter-spacing: 3px;
+        width: 120px;
+        background: #abc;
+        z-index: 9;
+        text-transform: uppercase;
+        /* display: none; */
+        overflow: hidden;
+    /* border-right: 3px solid #124;      */
+        animation:  typewriter 4s steps(44)  forwards;
+    }
+
+        @keyframes typewriter{
+            from{width: 0;}
+            to{width: 160px; visibility: hidden;}
+        }
+
+        .welcome.dis{
+            display: block;
+        }
+        .welcome.dis ~ .t,.welcome.dis ~ .d{
+        animation:  hideshow 4.2s ease  forwards;
+
+        }
+
+    .t, .d{width: 100px;
+        font-size: 14px;
+        top:88%;
+        box-shadow: none;
+        /* display: none; */
+        opacity: 0;
+        left: 63px;
+    }
+    .d{
+        width: 70px;
+        left: unset;
+        right: -10px;
+    }
+    @keyframes hideshow{
+            99%{opacity: 0;}
+            100%{ display:block;visibility: visible;opacity: 1;  }
+        }
+    .keycontainer{
+        width: 90%;
+        height: 450px;
+        box-shadow: -3px -3px 3px #013,3px 3px 3px #235 ;
+        /* background: #abc; */
+        position: absolute;
+        bottom: 22px;
+        left: 50%;
+        transform: translate(-50%);
+        display: flex;
+        /* flex-direction: row; */
+        justify-content: space-around;
+        border-radius: 10px;
+        flex-wrap: wrap;
+    }
+    .keys{
+        width: 80px;
+        height: 40px;
+        margin: 10px;
+        box-sizing: border-box;
+        border: 1px solid #789;
+        font-family: 'Concert One';
+        text-shadow: 0 0 20px #000;
+        background: #aBD;
+        cursor: pointer;
+        border-radius: 10px;
+        color: rgb(255, 255, 255);
+        font-weight: 00;
+        box-shadow: 4px 4px 4px #013,-4px -4px 4px #235, inset 0 0 10px #124;
+        font-size: 30px;text-align: center;
+        line-height: 40px;
+    }
+    .num{
+        background: rgb(0, 93, 109);
+    }
+    .sign{
+        background: rgb(4, 90, 57);
+    }
+    /* .keys:hover{color: #434;} */
+    .keys:active{box-shadow:inset 4px 4px 4px rgb(0, 14, 43),inset -4px -4px 4px rgb(32, 57, 109), 0 0 4px #111;color:#fff;background: #124;}
+    .eq{background: #aC2;}
+    .clr{background: #a03;color: #eca; font-weight: 1; }
+    .btn{
+        width: 8px;
+        height: 20px;
+        position: absolute;
+        top: 148px;
+        right: -9px;
+        background: rgb(9, 31, 31);
+        border-radius: 0 4px 4px 0;
+        border: 1px solid #cba;
+        border-left:none;
+        cursor: pointer;
+    }
+    .btn:after{
+        content: '';
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: rgb(92, 0, 0);
+        box-shadow: 0 0 6px #000, 0 0 3px #3a3;
+        position: absolute;
+        top:50%;
+        left: -11px;
+        transform: translateY(-50%);
+    }
+    .btn.onoff{
+        width: 6px;
+        right: -7px;
+    }
+    .btn.onoff:after{background: #0f0;}
+    .btn.onoff ~.display input{display: block;}
+</style>
+<body>
+    <section>
+        <div class="btn"></div>
+        <div class="display">
+            <div class="welcome">Welcome</div>
+            <input type="text" class="calcs" readonly>
+            <input type="text" class="t" readonly>
+            <input type="text" class="d" readonly>
+        </div>
+        <div class="keycontainer">
+
+            <div class="keys num" onclick="getvalue('1')" >1</div>
+            <div class="keys num" onclick="getvalue('2')" >2</div>
+            <div class="keys num" onclick="getvalue('3')" >3</div>
+            <div class="keys num" onclick="getvalue('4')" >4</div>
+            <div class="keys num" onclick="getvalue('5')" >5</div>
+            <div class="keys num" onclick="getvalue('6')" >6</div>
+            <div class="keys num" onclick="getvalue('7')" >7</div>
+            <div class="keys num" onclick="getvalue('8')" >8</div>
+            <div class="keys num" onclick="getvalue('9')" >9</div>
+            <div class="keys sign" onclick="getvalue('/')" >/</div>
+            <div class="keys num" onclick="getvalue('0')" >0</div>
+            <div class="keys sign" onclick="getvalue('%')" >%</div>
+            <div class="keys sign" onclick="getvalue('+')" >+</div>
+            <div class="keys sign" onclick="getvalue('-')" >-</div>
+            <div class="keys sign" onclick="getvalue('*')" >*</div>
+            <div class="keys sign" onclick="getvalue('.')" >.</div>
+            <div class="keys eq"  onclick="calcs.value = eval( calcs.value)">=</div>
+
+            <!-- <div class="keys eq"  onclick="getvalue('=')">=</div> -->
+            <div class="keys clr"  onclick="getvalue('clear')">C</div>
+
+        </div>
+    </section>
+    <script>
+        const dspl = document.querySelector(".display");
+        const calcs = document.querySelector(".calcs");
+        const t = document.querySelector(".t");
+        const day = document.querySelector(".d");
+        const keys = document.querySelector(".key1");
+        const btn = document.querySelector(".btn");
+        const wel = document.querySelector(".welcome");
+        wel.addEventListener('click', we());
+        function we(){
+        }
+        var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+        function getvalue(a){
+            if(a=='clear'){
+                calcs.value =' ';
+            }
+            else if(a== '='){
+            calcs.value.eval;
+            }
+            else{
+                calcs.value += a;
+            }
+        }
+        btn.addEventListener('click', onoff);
+        function onoff(){
+            wel.classList.toggle("dis");
+            btn.classList.toggle('onoff');
+            calcs.value =' ';
+        }
+
+
+
+        function showdate(){
+            
+            var d = new Date(); 
+            d.getHours(); 
+            d.getMinutes();
+            d.getSeconds();
+            t.value = d.getHours()+":"+d.getMinutes()+":"+ d.getSeconds()+' '+days[d.getDay()];
+            day.value =  d.getDate()+' '+months[d.getMonth()]+' '+d.getFullYear();
+            
+        }
+        setInterval(showdate, 1);
+    </script>
+</body>
+</html>
